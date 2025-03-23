@@ -1,0 +1,5 @@
+{
+    "venvPath": "%USERPROFILE%/Documents",
+    "venv": "revwhoix_venv",
+    "extraPaths": ["."]
+}

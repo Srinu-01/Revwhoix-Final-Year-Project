@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RevWhoix - Reverse WHOIS Lookup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-animation">
+                <div class="logo-text">
+                    <span>rev</span><span class="highlight">whoix</span>
+                </div>
+            </div>
+            <h1>Reverse WHOIS Lookup</h1>
+            <p class="tagline">Discover domains associated with organizations, email addresses, and more</p>
+        </header>
+
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="keywordInput" placeholder="Enter organization name, email address, or any keyword...">
+                <button id="searchButton" class="pulse-button">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+            <div class="examples">
+                <p>Examples: <span class="example-chip" data-keyword="Microsoft">Microsoft</span>, 
+                <span class="example-chip" data-keyword="Google LLC">Google LLC</span>, 
+                <span class="example-chip" data-keyword="admin@facebook.com">admin@facebook.com</span></p>
+            </div>
+        </div>
+
+        <div id="loading" class="loading-container">
+            <div class="orbits">
+                <div class="orbit"></div>
+                <div class="orbit"></div>
+                <div class="orbit"></div>
+            </div>
+            <p>Searching for domains...</p>
+        </div>
+
+        <div id="results" class="results-container">
+            <div class="results-header">
+                <h2>Results for <span id="searchKeyword"></span></h2>
+                <div class="results-meta">
+                    <span class="count-badge"><span id="domainCount">0</span> domains found</span>
+                    <div class="controls">
+                        <button id="copyAll" class="icon-button" title="Copy all domains">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button id="exportCSV" class="icon-button" title="Export as CSV">
+                            <i class="fas fa-file-csv"></i>
+                        </button>
+                        <div class="filter-container">
+                            <input type="text" id="filterInput" placeholder="Filter domains...">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="domains-grid" id="domainsGrid">
+                <!-- Domains will be inserted here dynamically -->
+            </div>
+            
+            <div class="pagination">
+                <button id="prevPage" class="page-button" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+                <span id="pageIndicator">Page 1 of 1</span>
+                <button id="nextPage" class="page-button" disabled>Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        
+        <div id="noResults" class="no-results">
+            <div class="no-results-icon">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-times"></i>
+            </div>
+            <h2>No domains found</h2>
+            <p>Try a different keyword or verify your API key is correctly set up.</p>
+        </div>
+        
+        <div id="error" class="error-container">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2>Error</h2>
+            <p id="errorMessage"></p>
+        </div>
+
+        <div id="benefits" class="benefits-section">
+            <div class="benefits-header">
+                <h2>Benefits of <span>Reverse WHOIS Lookup</span></h2>
+                <p>Harness the power of domain intelligence to gain valuable insights</p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card" data-benefit="fraud">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Discover Fraud</h3>
+                    <p>Identify potentially malicious domains registered with similar information to protect your brand and customers.</p>
+                    <div class="benefit-hover-effect"></div>
+                </div>
+                
+                <div class="benefit-card" data-benefit="trends">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Discover Trends</h3>
+                    <p>Analyze domain registration patterns to spot emerging market trends and opportunities before your competitors.</p>
+                    <div class="benefit-hover-effect"></div>
+                </div>
+                
+                <div class="benefit-card" data-benefit="competitors">
+                    <div class="benefit-icon">
+                        <i class="fas fa-binoculars"></i>
+                    </div>
+                    <h3>Discover Competitors</h3>
+                    <p>Uncover hidden connections between domains to map out competitive landscapes and identify key players.</p>
+                    <div class="benefit-hover-effect"></div>
+                </div>
+                
+                <div class="benefit-card" data-benefit="connections">
+                    <div class="benefit-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3>Discover Connections</h3>
+                    <p>Reveal relationships between domains and organizations to understand complex ownership structures.</p>
+                    <div class="benefit-hover-effect"></div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span>rev</span><span class="highlight">whoix</span>
+            </div>
+            <p>A powerful tool for reverse WHOIS lookups using the WhoisXML API</p>
+            <div class="footer-links">
+                <a href="https://github.com/devanshbatham/revwhoix" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://main.whoisxmlapi.com/" target="_blank">
+                    <i class="fas fa-key"></i> Get API Key
+                </a>
+            </div>
+        </div>
+    </footer>
+    
+    <div id="notification" class="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationText"></span>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
